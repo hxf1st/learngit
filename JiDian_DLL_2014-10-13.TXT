@@ -1,0 +1,111 @@
+USE [dbJiDian]
+GO
+
+/****** Object:  Table [dbo].[Project]    Script Date: 10/13/2014 21:24:46 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Project]') AND type in (N'U'))
+DROP TABLE [dbo].[Project]
+GO
+
+USE [dbJiDian]
+GO
+
+/****** Object:  Table [dbo].[Project]    Script Date: 10/13/2014 21:24:46 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[Project](
+	[ProjectId] [bigint] IDENTITY(1,1) NOT NULL,
+	[ProjectName] [varchar](50) NULL,
+	[EnterpriseId] [bigint] NULL,
+	[StarTime] [datetime] NULL,
+	[EndTime] [datetime] NULL,
+	[Location] [varchar](50) NULL,
+	[Cost] [decimal](18, 3) NULL,
+	[Contacts] [varchar](20) NULL,
+	[Phone] [varchar](20) NULL,
+	[Address] [varchar](50) NULL,
+	[Email] [varchar](30) NULL,
+	[ProviderId] [bigint] NULL,
+	[SuperviseId] [bigint] NULL,
+	[CensorId] [bigint] NULL,
+	[InvestorId] [bigint] NULL,
+	[ProjectState] [int] NULL,
+	[IsPublic] [bit] NULL,
+	[ApprovalState] [int] NULL,
+	[progressState] [int] NULL,
+	[Summary] [text] NULL,
+ CONSTRAINT [PK_Project] PRIMARY KEY CLUSTERED 
+(
+	[ProjectId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+USE [dbJiDian]
+GO
+
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_v2_Device_v2_Device]') AND parent_object_id = OBJECT_ID(N'[dbo].[Device]'))
+ALTER TABLE [dbo].[Device] DROP CONSTRAINT [FK_v2_Device_v2_Device]
+GO
+
+USE [dbJiDian]
+GO
+
+/****** Object:  Table [dbo].[Device]    Script Date: 10/13/2014 21:25:39 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Device]') AND type in (N'U'))
+DROP TABLE [dbo].[Device]
+GO
+
+USE [dbJiDian]
+GO
+
+/****** Object:  Table [dbo].[Device]    Script Date: 10/13/2014 21:25:40 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[Device](
+	[DeviceId] [bigint] NOT NULL,
+	[DeviceName] [varchar](50) NULL,
+	[Brand] [varchar](30) NULL,
+	[Model] [varchar](30) NULL,
+	[ProductionDate] [datetime] NULL,
+	[SerialNumber] [varchar](50) NULL,
+	[Price] [decimal](18, 3) NULL,
+	[Warranty] [varchar](50) NULL,
+	[Summary] [text] NULL,
+	[IsPublicPrice] [bit] NULL,
+	[DeviceState] [int] NULL,
+ CONSTRAINT [PK_v2_Device] PRIMARY KEY CLUSTERED 
+(
+	[DeviceId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[Device]  WITH CHECK ADD  CONSTRAINT [FK_v2_Device_v2_Device] FOREIGN KEY([DeviceId])
+REFERENCES [dbo].[Device] ([DeviceId])
+GO
+
+ALTER TABLE [dbo].[Device] CHECK CONSTRAINT [FK_v2_Device_v2_Device]
+GO
+
